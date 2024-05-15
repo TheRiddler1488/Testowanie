@@ -1,12 +1,19 @@
 from django.test import TestCase
 from django.urls import reverse
-from testapp.models import Burger
-from datetime import  datetime , timedelta
+from testapp.models import BurgerModel
+from datetime import datetime, timedelta
+
 
 # Create your tests here.
-class BurgerModelTest(TestCase):
+class BurgerTest(TestCase):
     def setUp(self):
-        Burger.objects.create(name='Test burger',price = 8, weight = 180,meat = "FISH", bacon = True, date = datetime.now() - timedelta (5),pk = 1)
-    def test_fresh(self):
-        burger = Burger.objects.get(name='Test burger')
-        self.assertTrue(not burger.is_fresh())
+        BurgerModel.objects.create(name='Test burger', price=9)
+        BurgerModel.objects.create(name='Another burger', price=7)
+
+    def test_is_more8(self):
+        burger = BurgerModel.objects.get(name='Test burger')
+        self.assertTrue(burger.is_more8())
+
+    def test_is_less8(self):
+        burger = BurgerModel.objects.get(name='Another burger')
+        self.assertFalse(burger.is_less8())
